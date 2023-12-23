@@ -4,9 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="extra.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
-<body>
-    <p class="text-2xl">HELO HELO</p>
+<body class="bg-[#000] font-montserrat">
+    <div class="h-screen flex items-center justify-center gap-10">
+        <div class="drop-zone h-[90%] w-[30%] bg-[#070911] rounded-lg flex flex-col items-start justify-center" ondragover="drag(event)" ondragleave="dragLeave()" ondrop="drop(event)">
+            <div class="flex items-center justify-center h-[4.5rem] bg-[#090D20] w-full rounded-t-lg">
+                <p class="text-xl text-[#9A9A9A]">File Upload</p>
+            </div>
+
+            <label for="uploadFile" class="w-full h-full flex flex-col items-center justify-center">
+                <img src="images/upload.svg" alt="" srcset="">
+                <br>
+                <p class="text-2xl text-[#A5A5A5]">Drop files or click to upload</p>
+                <br>
+                <div class="preview-container" id="preview"></div>
+                <br>
+                <input type="file" id="uploadFile" class="file-input" multiple onchange="uploadFiles(this.files)">
+                <button class="text-white bg-green-400 h-10 w-[5rem] rounded-lg" id="submitBtn" style="display: none;">Submit</button>
+            </label>
+        </div>
+        <div class="flex items-start justify-center h-[90%] w-[50%]">
+            <div class="bg-white w-full h-[60%] rounded-lg"></div>
+        </div>
+    </div>
+
+    <script>
+        "use strict";
+
+        function uploadFiles(files) {
+            var preview = document.getElementById("preview");
+
+            for (var i = 0; i < files.length; i++) {
+                var fileName = URL.createObjectURL(files[i]);
+                var previewImg = document.createElement("div");
+                previewImg.classList.add("preview-image");
+
+                var img = document.createElement("img");
+                img.src = fileName;
+
+                var deleteBtn = document.createElement("div");
+                deleteBtn.classList.add("delete-button");
+                deleteBtn.textContent = "x";
+                deleteBtn.onclick = function (event) {
+                    event.stopPropagation(); // Prevents event bubbling to the input
+                    event.preventDefault(); // Prevents default behavior (upload prompt)
+                    var imageDiv = this.parentNode;
+                    imageDiv.parentNode.removeChild(imageDiv);
+                    checkSubmitButton();
+                };
+
+                previewImg.appendChild(img);
+                previewImg.appendChild(deleteBtn);
+                preview.appendChild(previewImg);
+            }
+
+            checkSubmitButton();
+        }
+
+        function checkSubmitButton() {
+            var preview = document.getElementById("preview");
+            var submitBtn = document.getElementById("submitBtn");
+            submitBtn.style.display = (preview.childElementCount > 0) ? "block" : "none";
+        }
+
+        function uploadFile(files) {
+            var fileName = URL.createObjectURL(files[0]);
+            var preview = document.getElementById("preview");
+            var previewImg = document.createElement("img");
+            previewImg.setAttribute("src", fileName);
+            preview.innerHTML = "";
+            preview.appendChild(previewImg);
+
+            document.getElementById('submitBtn').style.display = 'block';
+        }
+
+        function drag(event) {
+            event.preventDefault();
+            document.querySelector('.drop-zone').classList.add('dragging-over');
+        }
+
+        function dragLeave() {
+            document.querySelector('.drop-zone').classList.remove('dragging-over');
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            document.querySelector('.drop-zone').classList.remove('dragging-over');
+            uploadFiles(event.dataTransfer.files);
+        }
+    </script>
 </body>
 </html>
