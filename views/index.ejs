@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,16 @@
     <link rel="stylesheet" href="extra.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <title>Document</title>
 </head>
+
 <body class="bg-[#000] font-montserrat">
     <div class="h-screen flex items-center justify-center gap-10">
-        <div class="drop-zone h-[90%] w-[30%] bg-[#070911] rounded-lg flex flex-col items-start justify-center" ondragover="drag(event)" ondragleave="dragLeave()" ondrop="drop(event)">
+        <div class="drop-zone h-[90%] w-[30%] bg-[#070911] rounded-lg flex flex-col items-start justify-center"
+            ondragover="drag(event)" ondragleave="dragLeave()" ondrop="drop(event)">
             <div class="flex items-center justify-center h-[4.5rem] bg-[#090D20] w-full rounded-t-lg">
                 <p class="text-xl text-[#9A9A9A]">File Upload</p>
             </div>
@@ -24,12 +29,105 @@
                 <br>
                 <div class="preview-container" id="preview"></div>
                 <br>
-                <input type="file" id="uploadFile" class="file-input" multiple onchange="uploadFiles(this.files)">
-                <button class="text-white bg-green-400 h-10 w-[5rem] rounded-lg" id="submitBtn" style="display: none;">Submit</button>
+                <form action="/" method="post" enctype="multipart/form-data">
+                    <input type="file" id="uploadFile" name="uploadFile" class="file-input" multiple
+                        onchange="uploadFiles(this.files)">y
+                    <button type="submit" class="text-white bg-green-400 h-10 w-[5rem] rounded-lg" id="submitBtn"
+                        style="display: none;">Submit</button>
+                </form>
             </label>
         </div>
-        <div class="flex items-start justify-center h-[90%] w-[50%]">
-            <div class="bg-white w-full h-[60%] rounded-lg"></div>
+        <div class="flex items-start justify-center h-[90%] w-[60%]">
+            <div class="w-full h-[60%] rounded-lg bg-[#070911] flex flex-col items-center justify-start">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#090D20] dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    File Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Size
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Date
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Type
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% 
+                            var count = 0;
+                            post.forEach(function(post){
+                            if (count < 6) {
+                            %>
+                            <tr
+                                class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <%= post.filename %>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= post.fileSize %> MB
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= post.time %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    png
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-start gap-5">
+                                        <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#940000]"
+                                            href="#"><img src="images/bin.svg" alt="" srcset=""> Delete</a>
+                                        <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#000694]"
+                                            href="#"><img src="images/pencil.svg" alt="" srcset=""> Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <%
+                                count++;
+                                } else {
+                                    return; // Exit the loop after 2 iterations
+                                }
+                                });
+                            %>
+
+                            <tr
+                                class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-[#090D20] border-b dark:border-gray-700">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Microsoft Surface Pro
+                                </th>
+                                <td class="px-6 py-4">
+                                    White
+                                </td>
+                                <td class="px-6 py-4">
+                                    Laptop PC
+                                </td>
+                                <td class="px-6 py-4">
+                                    $1999
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-start gap-5">
+                                        <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#940000]"
+                                            href="#"><img src="images/bin.svg" alt="" srcset=""> Delete</a>
+                                        <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#000694]"
+                                            href="#"><img src="images/pencil.svg" alt="" srcset=""> Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -99,4 +197,5 @@
         }
     </script>
 </body>
+
 </html>
