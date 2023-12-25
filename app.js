@@ -7,15 +7,14 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const {
-  v4: uuidv4
-} = require('uuid');
-
+const randomstring = require('randomstring');
 
 
 
 
 mongoose.connect(process.env.mongoURI).then(() => console.log(`[INFORMATION]> Connection to DB was succesful`.green)).catch(err => console.log(err));
+
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -23,7 +22,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const extension = file.originalname.split('.').pop();
-    const name = `${uuidv4()}.${extension}`;
+    const name = `${randomstring.generate({length: 6,charset: 'alphanumeric'})}.${extension}`;
     console.log(name);
     cb(null, name);
   }

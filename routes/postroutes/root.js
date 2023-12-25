@@ -20,8 +20,9 @@ const root = (app, upload) => {
                 const file = files[i];
 
                 const post = new Post({
-                    filename: file.originalname, // Using originalname for the filename
+                    filename: file.filename, // Using originalname for the filename
                     fileSize: (file.size / (1024 * 1024)).toFixed(3),
+                    filetype: file.mimetype.split('/')[1],
                     time: new Date()
                 });
 
@@ -30,7 +31,7 @@ const root = (app, upload) => {
                 console.log(`[DEBUG]> File ${file.originalname} data was successfully saved in the database without any errors.`.green);
             }
 
-            res.send('File(s) uploaded successfully!');
+            res.redirect("/")
         } catch (err) {
             console.error('Error occurred during file upload:', err);
             res.status(500).send('File upload failed!');

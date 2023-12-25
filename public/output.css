@@ -580,20 +580,16 @@ video {
   height: 100vh;
 }
 
-.h-\[70\%\] {
-  height: 70%;
-}
-
 .w-\[30\%\] {
   width: 30%;
 }
 
-.w-\[50\%\] {
-  width: 50%;
-}
-
 .w-\[5rem\] {
   width: 5rem;
+}
+
+.w-\[60\%\] {
+  width: 60%;
 }
 
 .w-\[7rem\] {
@@ -602,10 +598,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.w-\[60\%\] {
-  width: 60%;
 }
 
 .flex-col {

@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const postSchema = new mongoose.Schema({
     filename: String,
     fileSize: Number,
-    time: Date
+    time: Date,
+    filetype: String
 });
 
 

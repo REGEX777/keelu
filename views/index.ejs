@@ -79,12 +79,12 @@
                                     <%= post.time %>
                                 </td>
                                 <td class="px-6 py-4">
-                                    png
+                                    <%= post.filetype %>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-start gap-5">
                                         <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#940000]"
-                                            href="#"><img src="images/bin.svg" alt="" srcset=""> Delete</a>
+                                            href="/delete/<%= post.id %>"><img src="images/bin.svg" alt="" srcset=""> Delete</a>
                                         <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#000694]"
                                             href="#"><img src="images/pencil.svg" alt="" srcset=""> Delete</a>
                                     </div>
@@ -99,30 +99,6 @@
                                 });
                             %>
 
-                            <tr
-                                class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-[#090D20] border-b dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Microsoft Surface Pro
-                                </th>
-                                <td class="px-6 py-4">
-                                    White
-                                </td>
-                                <td class="px-6 py-4">
-                                    Laptop PC
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center justify-start gap-5">
-                                        <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#940000]"
-                                            href="#"><img src="images/bin.svg" alt="" srcset=""> Delete</a>
-                                        <a class="flex items-center justify-center gap-2 h-10 w-[7rem] text-white rounded-lg bg-[#000694]"
-                                            href="#"><img src="images/pencil.svg" alt="" srcset=""> Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -132,7 +108,6 @@
     </div>
 
     <script>
-        "use strict";
 
         function uploadFiles(files) {
             var preview = document.getElementById("preview");
