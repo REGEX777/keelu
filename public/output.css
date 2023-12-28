@@ -815,11 +815,6 @@ video {
     background-color: rgb(17 24 39 / var(--tw-bg-opacity));
   }
 
-  .even\:dark\:bg-\[\#090D20\]:nth-child(even) {
-    --tw-bg-opacity: 1;
-    background-color: rgb(9 13 32 / var(--tw-bg-opacity));
-  }
-
   .even\:dark\:bg-gray-800:nth-child(even) {
     --tw-bg-opacity: 1;
     background-color: rgb(31 41 55 / var(--tw-bg-opacity));

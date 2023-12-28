@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const randomstring = require('randomstring');
-
+const session = require('express-session')
 
 
 
@@ -41,17 +41,39 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(session({
+  secret: "ghinawan",
+  resave: false,
+  saveUninitialized: true
+}));
 
-// Function to include route handlers from all directories and subdirectories
+
+// Middleware to check if user is logged in
+const isLoggedIn = (req, res, next) => {
+  if (req.session && req.session.username) {
+    // If session exists, proceed to the next middleware/route
+    next();
+  } else {
+    // If session doesn't exist, redirect to login page or return an error
+    res.status(401).send('You are not logged in.');
+  }
+};
+
+
+
+const loginPath = path.join(__dirname, "login.json");
+
+
+
 const includeRoutes = (dir) => {
   fs.readdirSync(dir).forEach(file => {
     const routePath = path.join(dir, file);
     if (fs.lstatSync(routePath).isDirectory()) {
-      includeRoutes(routePath); // If it's a directory, traverse it recursively
+      includeRoutes(routePath);
     } else {
       const route = require(routePath);
       if (typeof route === 'function') {
-        route(app, upload);
+        route(app, upload, isLoggedIn);
       } else {
         console.error(`[-] Error: ${file} does not export a valid route function.`.red);
       }
@@ -59,8 +81,8 @@ const includeRoutes = (dir) => {
   });
 };
 
-// Include route handlers from the main routes directory and its subdirectories
 includeRoutes(routesDirectory);
+
 
 app.listen(port, () => {
   console.log(`[+] Server started on port ${port}.`.green);
